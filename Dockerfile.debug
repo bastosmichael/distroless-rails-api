@@ -1,11 +1,11 @@
-FROM ruby:2.6.5-slim-stretch as ruby-dev
+FROM ruby:2.6.5-slim-buster as ruby-dev
 RUN apt-get update -y && apt-get install -y build-essential libsqlite3-dev
 
 ADD neato_api /app
 WORKDIR /app
 RUN gem install bundler --pre && bundle install
 
-FROM gcr.io/distroless/base:debug
+FROM gcr.io/distroless/base-debian10:debug
 
 COPY --from=ruby-dev /app /app
 
@@ -49,10 +49,4 @@ ENV PATH=/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/l
 
 WORKDIR /app
 
-CMD ["/usr/local/bin/ruby", "-v"]
-#CMD ["ruby", "-v"]
-#ENTRYPOINT [ "sh" ]
-#CMD ["/usr/local/bin/ruby", "rails", "s"]
-#CMD ["/bin/env", "ruby", "-v"]
-#CMD ["ruby", "/app/bin/rails", "server", "--binding", "0.0.0.0", "--port", "3000"]
-#CMD ["/usr/local/bin/ruby", "/app/bin/rails", "server", "--binding", "0.0.0.0", "--port", "3000"]
+CMD ["/usr/local/bin/ruby", "/app/bin/rails", "server", "--binding", "0.0.0.0", "--port", "3000"]

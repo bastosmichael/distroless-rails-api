@@ -14,8 +14,8 @@ debug:
 	docker build -t ruby_debug -f Dockerfile.debug .
 
 debug_run:
-	#docker run -p 3000:3000 -it ruby_debug --entrypoint=sh
-	docker run -p 3000:3000 -it ruby_debug
+	docker run -p 3000:3000 -it ruby_debug --entrypoint=sh
+	#docker run -p 3000:3000 -it ruby_debug
 
 distroless:
 	docker build -t ruby_distroless -f Dockerfile.distroless .
