@@ -3,4 +3,5 @@ RUN apt-get update -y && apt-get install -y build-essential libsqlite3-dev
 ADD neato_api /app
 WORKDIR /app
 RUN gem install bundle && bundle install
-CMD ["bin/rails", "server", "--binding", "0.0.0.0", "--port", "3000"]
+CMD ["/bin/bash"]
+#CMD ["ruby", "/app/bin/rails", "server", "--binding", "0.0.0.0", "--port", "3000"]

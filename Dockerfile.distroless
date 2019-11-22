@@ -1,5 +1,5 @@
 FROM ruby:2.6.5-slim-stretch as ruby
-FROM gcr.io/distroless/base
+FROM gcr.io/distroless/base:debug
 
 COPY --from=ruby /lib/x86_64-linux-gnu/libz.so.* /lib/x86_64-linux-gnu/
 COPY --from=ruby /usr/lib/x86_64-linux-gnu/libyaml* /usr/lib/x86_64-linux-gnu/
