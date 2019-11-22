@@ -10,8 +10,6 @@ docker kill $DockerID
 echo 'reset id variable'
 DockerID=''
 echo 'importing image'
-#docker import --change "ENTRYPOINT [\"/bundle\", \"exec\", \"rails\", \"s\"]" latest.tar ruby_debug:flat
-#docker import --change "ENTRYPOINT [\"/bin/sh\"]" latest.tar ruby_release:flat
 docker import --change "ENTRYPOINT [\"/usr/local/bin/ruby\", \"/app/bin/rails\", \"server\", \"--binding\", \"0.0.0.0\", \"--port\", \"3000\"]" \
 --change "WORKDIR /app" \
 --change "ENV TERM=dumb" \
