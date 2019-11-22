@@ -5,7 +5,7 @@ ADD neato_api /app
 WORKDIR /app
 RUN gem install bundler --pre && bundle install
 
-FROM gcr.io/distroless/cc:debug
+FROM gcr.io/distroless/base:debug
 
 COPY --from=ruby-dev /app /app
 
@@ -28,10 +28,6 @@ COPY --from=ruby-dev /usr/lib/x86_64-linux-gnu/libsqlite3.so.0 /usr/lib/x86_64-l
 COPY --from=ruby-dev /usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6 /usr/lib/x86_64-linux-gnu/libsqlite3.so.0.8.6
 COPY --from=ruby-dev /usr/lib/x86_64-linux-gnu/pkgconfig/sqlite3.pc /usr/lib/x86_64-linux-gnu/pkgconfig/sqlite3.pc
 
-#COPY --from=ruby-dev /usr/local/bundle/extensions/x86_64-linux/2.6.0/ffi-1.11.2/ffi_c.so /usr/local/bundle/extensions/x86_64-linux/2.6.0/ffi-1.11.2/ffi_c.so
-#COPY --from=ruby-dev /usr/local/bundle/gems/ffi-1.11.2/lib/ffi_c.so /usr/local/bundle/gems/ffi-1.11.2/lib/ffi_c.so
-#COPY --from=ruby-dev /usr/local/bundle/gems/ffi-1.11.2/ext/ffi_c/ffi_c.so /usr/local/bundle/gems/ffi-1.11.2/ext/ffi_c/ffi_c.so
-
 COPY --from=ruby-dev /usr/lib/x86_64-linux-gnu/libffi.a /usr/lib/x86_64-linux-gnu/libffi.a
 COPY --from=ruby-dev /usr/lib/x86_64-linux-gnu/libffi.so /usr/lib/x86_64-linux-gnu/libffi.so
 COPY --from=ruby-dev /usr/lib/x86_64-linux-gnu/libffi.so.6 /usr/lib/x86_64-linux-gnu/libffi.so.6
@@ -41,21 +37,22 @@ ENV TERM=dumb
 ENV HOSTNAME=distroless_ruby
 ENV RUBY_DOWNLOAD_SHA256=d5d6da717fd48524596f9b78ac5a2eeb9691753da5c06923a6c31190abe01a62
 ENV RUBY_VERSION=2.6.5
-#ENV PWD=/app
+ENV PWD=/app
 ENV BUNDLE_APP_CONFIG=/usr/local/bundle
 ENV RUBY_MAJOR=2.6
 ENV HOME=/root
 ENV BUNDLE_SILENCE_ROOT_WARNING=1
 ENV GEM_HOME=/usr/local/bundle
-#ENV TERM=xterm
 ENV SHLVL=1
 ENV BUNDLE_PATH=/usr/local/bundle
-ENV PATH=/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-#_=/usr/bin/env
+ENV PATH=/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/busybox
 
 WORKDIR /app
 
+CMD ["/usr/local/bin/ruby", "-v"]
+#CMD ["ruby", "-v"]
+#ENTRYPOINT [ "sh" ]
 #CMD ["/usr/local/bin/ruby", "rails", "s"]
 #CMD ["/bin/env", "ruby", "-v"]
 #CMD ["ruby", "/app/bin/rails", "server", "--binding", "0.0.0.0", "--port", "3000"]
-CMD ["/usr/local/bin/ruby", "/app/bin/rails", "server", "--binding", "0.0.0.0", "--port", "3000"]
+#CMD ["/usr/local/bin/ruby", "/app/bin/rails", "server", "--binding", "0.0.0.0", "--port", "3000"]
