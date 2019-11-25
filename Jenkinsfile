@@ -4,6 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                echo "${params}"
+                echo "Targets: ${params.TARGETS}"
                 echo 'Building..'
                 sh 'make debug'
             }
