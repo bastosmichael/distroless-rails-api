@@ -5,25 +5,19 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh "docker run -v ${workspace}/neato_api:/code presidentbeef/brakeman:latest --color -f tabs"
-                //sh 'docker images'
+                sh "docker run -v ${workspace}/neato_api:/code presidentbeef/brakeman:latest -f markdown --color"
             }
         }        
         stage('Build') {
             steps {
-                //echo "${params}"
-                //echo "Targets: ${params.TARGETS}"
                 echo 'Building..'
                 sh "make ${params.TARGETS}"
             }
         }
         stage('Scan') {
             steps {
-                //echo "${params}"
-                //echo "Targets: ${params.TARGETS}"
                 echo 'Scanning..'
                 sh "trivy ruby_${params.TARGETS}:latest --clear-cache"
-                //sh "make ${params.TARGETS}"
             }
         }
         stage('Deploy') {
