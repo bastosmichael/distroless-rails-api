@@ -1,7 +1,7 @@
 #! /bin/bash
 
 echo 'running container to export'
-docker run -id ruby_release:latest
+docker run -id ruby_$IMAGE:latest
 export DockerID=$(docker ps -q)
 echo 'exporting image to tar'
 docker export $DockerID > latest.tar
@@ -25,6 +25,6 @@ docker import --change "ENTRYPOINT [\"/usr/local/bin/ruby\", \"/app/bin/rails\",
 --change "ENV SHLVL=1" \
 --change "ENV BUNDLE_PATH=/usr/local/bundle" \
 --change "ENV PATH=/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
-latest.tar ruby_release:flat
+latest.tar ruby_$IMAGE:flat
 echo 'deleting image'
 rm latest.tar

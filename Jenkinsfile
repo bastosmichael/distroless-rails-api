@@ -20,9 +20,16 @@ pipeline {
                 sh "trivy ruby_${params.TARGETS}:latest --clear-cache"
             }
         }
-        stage('Deploy') {
+        stage('Flatten') {
             steps {
-                echo 'Deploying....'
+                echo 'Scanning..'
+                sh "export IMAGE=${params.TARGETS} && ./flatten.sh"
+            }
+        }        
+        stage('Display') {
+            steps {
+                echo 'Displaying....'
+                sh 'docker images'
             }
         }
     }
