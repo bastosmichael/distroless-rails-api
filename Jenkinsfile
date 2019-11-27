@@ -5,7 +5,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh "docker run -v ${workspace}/neato_api:/code presidentbeef/brakeman:latest -f markdown --color"
+                sh "docker run -v ${workspace}/neato_api:/code presidentbeef/brakeman:latest -f table --color"
             }
         }        
         stage('Build') {
