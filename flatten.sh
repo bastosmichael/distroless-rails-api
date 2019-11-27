@@ -2,6 +2,7 @@
 
 echo 'running container to export'
 docker run -id ruby_$IMAGE:latest
+# need better pid detection method based on image name
 export DockerID=$(docker ps -q)
 echo 'exporting image to tar'
 docker export $DockerID > latest.tar

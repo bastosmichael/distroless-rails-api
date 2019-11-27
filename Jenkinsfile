@@ -22,8 +22,8 @@ pipeline {
         }
         stage('Flatten') {
             steps {
-                echo 'Scanning..'
-                sh "export IMAGE=${params.TARGETS} && ./flatten.sh"
+                echo 'Flatten..'
+                //sh "export IMAGE=${params.TARGETS} && ./flatten.sh"
             }
         }        
         stage('Display') {
