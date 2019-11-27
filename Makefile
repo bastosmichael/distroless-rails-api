@@ -1,5 +1,7 @@
 runtime:
 	docker build -t ruby_runtime -f Dockerfile.runtime .
+	docker run -v "$(pwd)":/code brakeman --color
+	trivy ruby_runtime:latest --clear-cache
 
 runtime_run:
 	docker run -p 3001:3000 -it ruby_runtime
