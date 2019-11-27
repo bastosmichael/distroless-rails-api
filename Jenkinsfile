@@ -5,7 +5,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh "docker run -v ${workspace}/distroless-rails-api/app:/code presidentbeef/brakeman:latest --color"
+                sh "docker run -v ${workspace}/distroless-rails-api/neato_api:/code presidentbeef/brakeman:latest --color"
                 //sh 'docker images'
             }
         }        
