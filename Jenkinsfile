@@ -7,7 +7,7 @@ pipeline {
                 echo "${params}"
                 echo "Targets: ${params.TARGETS}"
                 echo 'Building..'
-                sh 'make debug'
+                sh "make ${params.TARGETS}"
             }
         }
         stage('Test') {
