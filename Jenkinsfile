@@ -5,7 +5,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh "docker run -v $(pwd):/app presidentbeef/brakeman:latest --color"
+                sh "docker run -v ${workspace}:/app presidentbeef/brakeman:latest --color"
                 //sh 'docker images'
             }
         }        
