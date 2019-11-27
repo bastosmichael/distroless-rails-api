@@ -10,6 +10,9 @@ release:
 release_run:
 	docker run -p 3000:3000 -it ruby_release
 
+flatten:
+	./flatten.sh
+
 debug:
 	docker build -t ruby_debug -f Dockerfile.debug .
 	trivy ruby_debug:latest --clear-cache
