@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                //echo 'Testing..'
-                docker run -v $PWD:/app presidentbeef/brakeman:latest --color
+                echo 'Testing..'
+                sh "docker run -v $PWD:/app presidentbeef/brakeman:latest --color"
                 //sh 'docker images'
             }
         }        
