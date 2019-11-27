@@ -15,7 +15,6 @@ flatten:
 
 debug:
 	docker build -t ruby_debug -f Dockerfile.debug .
-	trivy ruby_debug:latest --clear-cache
 
 debug_run:
 	docker run -p 3000:3000 -it ruby_debug --entrypoint=sh
