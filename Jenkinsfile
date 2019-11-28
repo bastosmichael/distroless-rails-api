@@ -23,7 +23,7 @@ pipeline {
         stage('Flatten') {
             steps {
                 echo 'Flatten..'
-                //sh "export IMAGE=${params.TARGETS} && ./flatten.sh"
+                sh "export IMAGE=${params.TARGETS} && ./flatten.sh"
             }
         }        
         stage('Display') {

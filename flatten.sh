@@ -1,15 +1,23 @@
 #! /bin/bash
 
+# generate uuid
+export container_name=$(uuidgen)
+# assign uuid to running container name
 echo 'running container to export'
-docker run -id ruby_$IMAGE:latest
-# need better pid detection method based on image name
-export DockerID=$(docker ps -q)
+echo "container name: $container_name"
+docker run -id --name $container_name ruby_$IMAGE:latest
+# get pid of running container by uuid in name
+export DockerID=$(docker ps | grep $container_name | awk '{print $1}')
+# export container image by pid
 echo 'exporting image to tar'
 docker export $DockerID > latest.tar
+# kill any running container with matching name
 echo 'killing running container'
-docker kill $DockerID
+docker ps | grep $container_name | awk '{print $1}' | xargs docker kill
+# clear pid environment variable
 echo 'reset id variable'
 DockerID=''
+# import exported image as single layer
 echo 'importing image'
 docker import --change "ENTRYPOINT [\"/usr/local/bin/ruby\", \"/app/bin/rails\", \"server\", \"--binding\", \"0.0.0.0\", \"--port\", \"3000\"]" \
 --change "WORKDIR /app" \
@@ -27,5 +35,6 @@ docker import --change "ENTRYPOINT [\"/usr/local/bin/ruby\", \"/app/bin/rails\",
 --change "ENV BUNDLE_PATH=/usr/local/bundle" \
 --change "ENV PATH=/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
 latest.tar ruby_$IMAGE:flat
+# delete exported tar file
 echo 'deleting image'
 rm latest.tar
