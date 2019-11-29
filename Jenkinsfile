@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Echo') {
+            steps {
+                echo 'Echo display text from Jenkinsfile..'
+                //sh "docker run -v ${workspace}/neato_api:/code presidentbeef/brakeman:latest -f table --color"
+            }
+        }       
         stage('Test') {
             steps {
                 echo 'Testing..'
